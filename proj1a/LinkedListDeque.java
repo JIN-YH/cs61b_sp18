@@ -2,11 +2,11 @@ public class LinkedListDeque<T> {
     private IntNode sentinel;
     private int size;
 
-    public class IntNode {
-        public IntNode prev;
-        public T item;
-        public IntNode next;
-        public IntNode(IntNode pre, T i, IntNode nex) {
+    private class IntNode {
+        private IntNode prev;
+        private T item;
+        private IntNode next;
+        private IntNode(IntNode pre, T i, IntNode nex) {
             prev = pre;
             item = i;
             next = nex;
@@ -14,7 +14,7 @@ public class LinkedListDeque<T> {
     }
 
     public LinkedListDeque() {
-        sentinel = new IntNode(null ,null , null);
+        sentinel = new IntNode(null, null, null);
         size = 0;
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
@@ -22,17 +22,13 @@ public class LinkedListDeque<T> {
 
     public void addLast(T item) {
         sentinel.prev = new IntNode(sentinel.prev, item, sentinel);
-        if (sentinel.next == sentinel) {
-            sentinel.next = sentinel.prev;
-        }
+        sentinel.prev.prev.next = sentinel.prev;
         size += 1;
     }
 
     public void addFirst(T item) {
         sentinel.next = new IntNode(sentinel, item, sentinel.next);
-        if (sentinel.prev == sentinel) {
-            sentinel.prev = sentinel.next;
-        }
+        sentinel.next.next.prev = sentinel.next;
         size += 1;
     }
 
@@ -49,28 +45,32 @@ public class LinkedListDeque<T> {
     public void printDeque() {
         if (size == 0) return;
         IntNode p = sentinel;
-        for (int i=0; i<size; i++) {
-            System.out.print(p.next.item+" ");
+        for (int i = 0; i < size; i++) {
+            System.out.print(p.next.item + " ");
             p = p.next;
         }
     }
 
     public T removeFirst() {
-        if (this.isEmpty()) return null;
-        T p = sentinel.next.item;
+        if (isEmpty()) return null;
+        IntNode p = sentinel.next;
         sentinel.next = sentinel.next.next;
         sentinel.next.prev = sentinel;
+        p.next = null;
+        p.prev = null;
         size -= 1;
-        return p;
+        return p.item;
     }
 
     public T removeLast() {
-        if (this.isEmpty()) return null;
-        T p = sentinel.prev.item;
+        if (isEmpty()) return null;
+        IntNode p = sentinel.prev;
         sentinel.prev = sentinel.prev.prev;
         sentinel.prev.next = sentinel;
         size -= 1;
-        return p;
+        p.next = null;
+        p.prev = null;
+        return p.item;
     }
 
     public T get(int index) {

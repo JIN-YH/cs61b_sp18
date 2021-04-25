@@ -12,19 +12,20 @@ public class ArrayDeque<T> {
     }
 
     private void resize(int s) {
-        T[] a =(T []) new Object[s];
+        T[] a = (T []) new Object[s];
         //System.arraycopy(items,movefirst(nextFirst), a, 1, s);
         int j = 1;
-        for(int i = movetoright(nextFirst); i!=nextLast; i= movetoright(i)) {
+        for (int i = movetoright(nextFirst); i != nextLast; i = movetoright(i)) {
             a[j] = items[i];
+            j += 1;
         }
         nextFirst = 0;
-        nextLast = nextFirst + items.length + 1;
+        nextLast = size + 1;
         items = a;
     }
 
     private int movetoleft(int i) {
-        if (i>0) return i-1;
+        if (i > 0) return i - 1;
         return items.length - 1;
     }
 
@@ -34,8 +35,8 @@ public class ArrayDeque<T> {
     }
 
     public void addFirst(T item) {
-        if (size == items.length ) {
-            resize(size*2);
+        if (size == items.length) {
+            resize(size * 2);
         }
         items[nextFirst] = item;
         nextFirst = movetoleft(nextFirst);
@@ -43,8 +44,8 @@ public class ArrayDeque<T> {
     }
 
     public void addLast(T item) {
-        if (size == items.length ) {
-            resize(size*2);
+        if (size == items.length) {
+            resize(size * 2);
         }
         items[nextLast] = item;
         nextLast = movetoright(nextLast);
@@ -63,7 +64,7 @@ public class ArrayDeque<T> {
     public void printDeque() {
         if (isEmpty()) return;
         for(int i = movetoright(nextFirst); i!=nextLast; i= movetoright(i)) {
-            System.out.println(items[i]);
+            System.out.print(items[i] + " ");
         }
     }
 
@@ -80,7 +81,7 @@ public class ArrayDeque<T> {
         nextFirst = movetoright(nextFirst);
         size -= 1;
         if (ratio()) {
-            resize(items.length/2);
+            resize(items.length / 2);
         }
         return temp;
     }
@@ -101,7 +102,7 @@ public class ArrayDeque<T> {
         if (isEmpty()) return null;
         int i = movetoright(nextFirst);
         while(index != 0) {
-            index--;
+            index -= 1;
             i = movetoright(i);
         }
         return items[i];
