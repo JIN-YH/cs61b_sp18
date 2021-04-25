@@ -70,7 +70,8 @@ public class ArrayDeque<T> {
 
     private boolean ratio() {
         if (size < 16) return false;
-        if (size/items.length < 0.25) return true;
+        float r = (float) size / (float) items.length;
+        if (r < 0.25) return true;
         return false;
     }
 
