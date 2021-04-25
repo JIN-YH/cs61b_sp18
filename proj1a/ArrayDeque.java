@@ -15,7 +15,7 @@ public class ArrayDeque<T> {
         T[] a = (T []) new Object[s];
         //System.arraycopy(items,movefirst(nextFirst), a, 1, s);
         int j = 1;
-        for (int i = movetoright(nextFirst); i != nextLast; i = movetoright(i)) {
+        for (int i = movetoright(nextFirst); j <= size; i = movetoright(i)) {
             a[j] = items[i];
             j += 1;
         }
@@ -93,7 +93,7 @@ public class ArrayDeque<T> {
         nextLast = movetoleft(nextLast);
         size -= 1;
         if (ratio()) {
-            resize(items.length/2);
+            resize(items.length / 2);
         }
         return temp;
     }
