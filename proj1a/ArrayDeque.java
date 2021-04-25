@@ -1,8 +1,12 @@
 public class ArrayDeque<T> {
-    T[] items;
-    int size;
-    int nextFirst;
-    int nextLast;
+    private T[] items;
+    private int size;
+    private int nextFirst;
+    private int nextLast;
+
+    private int getlen () {
+        return items.length;
+    }
 
     public ArrayDeque() {
         items = (T []) new Object[8];
@@ -25,12 +29,16 @@ public class ArrayDeque<T> {
     }
 
     private int movetoleft(int i) {
-        if (i > 0) return i - 1;
+        if (i > 0) {
+            return i - 1;
+        }
         return items.length - 1;
     }
 
     private int movetoright(int i) {
-        if (i < items.length - 1) return i + 1;
+        if (i < items.length - 1) {
+            return i + 1;
+        }
         return 0;
     }
 
@@ -53,7 +61,9 @@ public class ArrayDeque<T> {
     }
 
     public boolean isEmpty() {
-        if (size == 0) return true;
+        if (size == 0) {
+            return true;
+        }
         return false;
     }
 
@@ -62,27 +72,35 @@ public class ArrayDeque<T> {
     }
 
     public void printDeque() {
-        if (isEmpty()) return;
+        if (isEmpty()) {
+            return;
+        }
         for(int i = movetoright(nextFirst); i!=nextLast; i= movetoright(i)) {
             System.out.print(items[i] + " ");
         }
     }
 
     private boolean ratio() {
-        if (size < 16) return false;
-        float r = (float) size / (float) items.length;
+        if (getlen() < 16) {
+            return false;
+        }
+        int len = getlen();
+        int s = size;
+        float r = (float) s / (float) len;
         if (r < 0.25) return true;
         return false;
     }
 
     public T removeFirst() {
-        if (isEmpty()) return null;
+        if (isEmpty()) {
+            return null;
+        }
         T temp = items[movetoright(nextFirst)];
         items[movetoright(nextFirst)] = null;
         nextFirst = movetoright(nextFirst);
         size -= 1;
         if (ratio()) {
-            resize(items.length / 2);
+            resize(getlen() / 2);
         }
         return temp;
     }
@@ -94,7 +112,7 @@ public class ArrayDeque<T> {
         nextLast = movetoleft(nextLast);
         size -= 1;
         if (ratio()) {
-            resize(items.length / 2);
+            resize(getlen() / 2);
         }
         return temp;
     }
@@ -102,7 +120,7 @@ public class ArrayDeque<T> {
     public T get(int index) {
         if (isEmpty()) return null;
         int i = movetoright(nextFirst);
-        while(index != 0) {
+        while (index != 0) {
             index -= 1;
             i = movetoright(i);
         }
