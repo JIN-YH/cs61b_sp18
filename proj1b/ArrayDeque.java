@@ -118,7 +118,9 @@ public class ArrayDeque<Item> implements Deque<Item> {
 
     @Override
     public Item removeLast() {
-        if (isEmpty()) return null;
+        if (isEmpty()) {
+            return null;
+        }
         Item temp = items[movetoleft(nextLast)];
         items[movetoleft(nextLast)] = null;
         nextLast = movetoleft(nextLast);
@@ -131,7 +133,9 @@ public class ArrayDeque<Item> implements Deque<Item> {
 
     @Override
     public Item get(int index) {
-        if (isEmpty()) return null;
+        if (isEmpty()) {
+            return null;
+        }
         int i = movetoright(nextFirst);
         while (index != 0) {
             index -= 1;
