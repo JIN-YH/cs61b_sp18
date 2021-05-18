@@ -46,6 +46,9 @@ public class GuitarString {
         // TODO: Dequeue the front sample and enqueue a new sample that is
         //       the average of the two multiplied by the DECAY factor.
         //       Do not call StdAudio.play().
+        if (buffer.isEmpty()) {
+            throw new RuntimeException("Ring Buffer Underflow");
+        }
         double term = (buffer.dequeue() + buffer.peek()) * DECAY / 2;
         buffer.enqueue(term);
     }
@@ -53,6 +56,9 @@ public class GuitarString {
     /* Return the double at the front of the buffer. */
     public double sample() {
         // TODO: Return the correct thing.
+        if (buffer.isEmpty()) {
+            throw new RuntimeException("Ring Buffer Underflow");
+        }
         return buffer.peek();
     }
 }
