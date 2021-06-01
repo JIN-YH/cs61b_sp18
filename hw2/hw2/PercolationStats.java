@@ -16,10 +16,10 @@ public class PercolationStats {
         this.T = T;
         P = pf.make(N);
         for (int i = 0; i < T; i++) {
-            while(!P.percolates()) {
+            while (!P.percolates()) {
                 P.open(StdRandom.uniform(N), StdRandom.uniform(N));
             }
-            X[i] =(double) P.numberOfOpenSites() / (N * N);
+            X[i] = (double) P.numberOfOpenSites() / (N * N);
         }
 
     }
@@ -39,4 +39,6 @@ public class PercolationStats {
     public double confidenceHigh() {
         return this.mean() + 1.96 * this.stddev() / Math.sqrt(T);
     }
+
+
 }
