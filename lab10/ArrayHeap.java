@@ -125,6 +125,9 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         validateSinkSwimArg(index);
 
         /** TODO: Your code here. */
+        if (index == size) {
+            return;
+        }
         if (getNode(leftIndex(index)) == null && getNode(rightIndex(index)) == null) {
             return;
         }
@@ -180,8 +183,8 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         }
         T temp = contents[1].myItem;
         swap(1, size);
-        size -= 1;
         sink(1);
+        size -= 1;
         return temp;
     }
 
